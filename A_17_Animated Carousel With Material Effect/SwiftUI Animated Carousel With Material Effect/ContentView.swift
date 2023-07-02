@@ -24,7 +24,7 @@ struct ContentView: View {
                 .tag(2)
             Text("Downloads")
                 .tag(3)
-        }
+        } 
         .overlay(
             // custom Tab bar
             CustomTabBar(current: $current)
