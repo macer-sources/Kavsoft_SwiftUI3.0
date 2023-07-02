@@ -107,7 +107,7 @@ struct AddNewTask: View {
             // MARK: Type
             let taskTypes:[String] = ["Basic", "Urgent", "Important"]
             VStack(alignment: .leading, spacing: 12) {
-                Text("Task Title")
+                Text("Task Type")
                     .font(.caption)
                     .foregroundColor(.gray)
                 HStack(spacing: 12) {

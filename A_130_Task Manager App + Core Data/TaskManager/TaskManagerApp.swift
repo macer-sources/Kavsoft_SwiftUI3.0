@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct TaskManagerApp: App {
+    let persistenceController = PersistenceController.shared
     var body: some Scene {
         WindowGroup {
             NavigationStack {
@@ -16,6 +17,7 @@ struct TaskManagerApp: App {
                     .navigationTitle("Task Manager")
                     .navigationBarTitleDisplayMode(.inline)
             }
+            .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
