@@ -36,7 +36,7 @@ class TaskViewModel: ObservableObject {
 }
 
 extension TaskViewModel {
-    
+    // TODO: 当周日期
     func fetchCurrentWeek() {
         let today = Date()
         let calendar = Calendar.current
@@ -56,6 +56,7 @@ extension TaskViewModel {
 
 
 extension TaskViewModel {
+    // TODO: current data
     func filterTodayTasks() {
         DispatchQueue.global(qos: .userInteractive).async {
             let calendar = Calendar.current
