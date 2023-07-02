@@ -19,7 +19,8 @@ struct TasksView: View {
                     Text("No tasks found!!!")
                         .font(.system(size: 16))
                         .fontWeight(.light)
-                        .offset(y: 100)
+//                        .offset(y: 100)
+                        
                 }else {
                     ForEach(tasks) { task in
                         TaskCardView(task: task)
@@ -33,6 +34,7 @@ struct TasksView: View {
         }
         .padding()
         .padding(.top)
+        .frame(maxHeight: .infinity) // TODO: frame max height 好像没用
         .onChange(of: viewModel.currentDay) { newValue in
             viewModel.filterTodayTasks()
         }
@@ -43,6 +45,7 @@ extension TasksView {
     // MARK: Task Card View
     func TaskCardView(task: Task) -> some View {
         HStack.init(alignment: .top, spacing: 30) {
+            //TODO: 左侧时间线
             VStack(spacing: 10) {
                 Circle()
                     .fill(viewModel.isCurrentHour(date: task.date) ? .black : .clear)
@@ -57,6 +60,7 @@ extension TasksView {
                     .fill(.black)
                     .frame(width: 3)
             }
+            // TODO: 内容
             VStack{
                 HStack(alignment: .top, spacing: 10) {
                     VStack(alignment: .leading, spacing: 12) {
@@ -65,13 +69,15 @@ extension TasksView {
                         Text(task.description)
                             .font(.callout)
                             .foregroundStyle(.secondary)
-                    }.hLeading()
+                    }
+                    .hLeading()
                     
                     Text(task.date.formatted(date: .omitted, time: .shortened))
                 }
                 
+                // TODO: 当前小时内的 task 增加显示，用户信息等
                 if viewModel.isCurrentHour(date: task.date) {
-                    // MARK: Team Members
+                    // MARK: Team Members 用户头像
                     HStack(spacing: 0) {
                         HStack.init(spacing: -10) {
                             ForEach(["User1", "User2", "User3"], id: \.self) { user in

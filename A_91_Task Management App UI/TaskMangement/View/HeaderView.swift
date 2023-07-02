@@ -28,9 +28,10 @@ struct HeaderView: View {
             }
 
 
-        }.padding()
-            .padding(.top, getSafeArea().top)
-            .background(Color.white)
+        }
+        .padding()
+        .padding(.top, getSafeArea().top) //TODO: 处理ignoresSafeArea(.container, edges: .top) 后，顶部透明的问题
+        .background(Color.white)
     }
 }
 
