@@ -16,7 +16,13 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $current) {
-            ForYou()
+            GeometryReader(content: { proxy in
+                let topEdge = proxy.safeAreaInsets.top
+                
+                ForYou(topEdge: topEdge)
+                    .padding(.top, topEdge)
+                    .ignoresSafeArea(.all, edges: .top)
+            })
                 .tag(0)
             Text("Search")
                 .tag(1)

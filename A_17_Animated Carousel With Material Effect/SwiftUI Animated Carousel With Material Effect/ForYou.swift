@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct ForYou: View {
+    var topEdge: CGFloat
+    
     var body: some View {
-        VStack {
+        VStack(spacing: 15) {
             
             HeaderView()
             
@@ -21,7 +23,9 @@ struct ForYou: View {
                     // TODO: Card View
                     VStack(spacing: 0) {
                         ForEach(sample_datas) { movie in
-                            CardView(movie: movie)
+                            // 70 = title View
+                            // 15 = spacing
+                            CardView(movie: movie, topOffset: 70 + 15 + topEdge)
                                 .frame(height: size.height)
                         }
                     }
@@ -37,7 +41,7 @@ struct ForYou: View {
 
 struct ForYou_Previews: PreviewProvider {
     static var previews: some View {
-        ForYou()
+        ContentView()
     }
 }
 
@@ -45,11 +49,27 @@ struct ForYou_Previews: PreviewProvider {
 
 struct CardView: View {
     var movie: Movie
+    var topOffset: CGFloat
     var body: some View {
         // to get size for image
         // using geometry readering
         GeometryReader { proxy in
             let size = proxy.size
+            
+            // Scaling and opactiy effect...
+            let minY = proxy.frame(in: .global).minY - topOffset
+            
+            let progress = -minY / size.height
+            
+            // increasing scale by 3
+            let scale = 1 - (progress / 3)
+            
+            // why this is happening..
+            // bcz we need to eleminate top offset
+            // to get started from 0....
+            
+            let opactiy = 1 - progress
+            
             ZStack {
                 Image(movie.artwork)
                     .resizable()
@@ -58,6 +78,10 @@ struct CardView: View {
                     .cornerRadius(15)
             }
             .padding(.horizontal, 15)
+            .scaleEffect(minY < 0 ?  scale :  1)
+            .opacity(minY < 0 ? opactiy :  1)
+            // stopping view when y value goes < 0
+            .offset(y: minY < 0 ? -minY : 0)
         }
        
         
@@ -90,6 +114,7 @@ struct HeaderView: View {
             
         }
         .padding(.horizontal)
-        .padding(.vertical)
+        // Setting maxheight for offset calculation...
+        .frame(height: 70)
     }
 }
