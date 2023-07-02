@@ -23,6 +23,10 @@ struct VerticalCarouselList<Content: View>: UIViewRepresentable {
     }
     
     private func setUp(_ scrollView:UIScrollView) {
+        scrollView.isPagingEnabled = true
+        scrollView.showsVerticalScrollIndicator = false
+        
+        
         let hostView = UIHostingController(rootView: content)
         hostView.view.backgroundColor = .clear
         

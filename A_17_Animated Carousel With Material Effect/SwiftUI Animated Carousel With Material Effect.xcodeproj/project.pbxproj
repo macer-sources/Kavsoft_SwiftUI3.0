@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		960FDD942A512D120071A019 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FDD932A512D110071A019 /* Models.swift */; };
 		AB920B5F2A3C05FE0057CED9 /* SwiftUI_Animated_Carousel_With_Material_EffectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB920B5E2A3C05FE0057CED9 /* SwiftUI_Animated_Carousel_With_Material_EffectApp.swift */; };
 		AB920B612A3C05FE0057CED9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB920B602A3C05FE0057CED9 /* ContentView.swift */; };
 		AB920B632A3C05FF0057CED9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB920B622A3C05FF0057CED9 /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		960FDD932A512D110071A019 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		AB920B5B2A3C05FE0057CED9 /* SwiftUI Animated Carousel With Material Effect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftUI Animated Carousel With Material Effect.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB920B5E2A3C05FE0057CED9 /* SwiftUI_Animated_Carousel_With_Material_EffectApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI_Animated_Carousel_With_Material_EffectApp.swift; sourceTree = "<group>"; };
 		AB920B602A3C05FE0057CED9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 		AB920B6D2A3C06410057CED9 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				960FDD932A512D110071A019 /* Models.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -165,6 +168,7 @@
 				AB921E7D2A3C41290057CED9 /* VerticalCarouselList.swift in Sources */,
 				AB920B612A3C05FE0057CED9 /* ContentView.swift in Sources */,
 				AB920B6F2A3C06ED0057CED9 /* CustomTabBar.swift in Sources */,
+				960FDD942A512D120071A019 /* Models.swift in Sources */,
 				AB920B5F2A3C05FE0057CED9 /* SwiftUI_Animated_Carousel_With_Material_EffectApp.swift in Sources */,
 				AB921E7B2A3C0C330057CED9 /* ForYou.swift in Sources */,
 			);
