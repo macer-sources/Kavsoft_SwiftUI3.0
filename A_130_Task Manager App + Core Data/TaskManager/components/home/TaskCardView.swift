@@ -12,7 +12,7 @@ import SwiftUI
  */
 struct TaskCardView: View {
     var task: Task
-    
+    @EnvironmentObject var viewModel: TaskManagerViewModel
     @Environment(\.managedObjectContext) var context
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -31,7 +31,9 @@ struct TaskCardView: View {
                 // MARK: Edit button only for Non Completed tasks
                 if !task.isCompleted {
                     Button {
-                        
+                        viewModel.editTask = task
+                        viewModel.openEditTask = true
+                        viewModel.setupTask()
                     } label: {
                         Image(systemName: "square.and.pencil")
                             .foregroundColor(.black)
