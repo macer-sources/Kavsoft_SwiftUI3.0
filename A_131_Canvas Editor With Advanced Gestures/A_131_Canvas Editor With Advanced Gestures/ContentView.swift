@@ -43,7 +43,11 @@ struct ContentView: View {
             
             // MARK: Save Button
             Button {
-                
+                // MARK: Saving canvas image
+                viewModel.saveCanvasImage(height: 250) {
+                    CanvasView()
+                        .environmentObject(viewModel)
+                }
             } label: {
                 Image(systemName: "arrow.right.circle.fill")
                     .font(.largeTitle)

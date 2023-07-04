@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class CanvasViewModel: ObservableObject {
+class CanvasViewModel:NSObject, ObservableObject {
   
     // MARK: Canvas Stack
     @Published var stacks:[StackItem] = []
@@ -35,3 +35,36 @@ extension CanvasViewModel {
     }
 }
 
+
+
+extension CanvasViewModel {
+    func saveCanvasImage<Content: View> (height: CGFloat, @ViewBuilder content: @escaping () -> Content) {
+        let uiview = UIHostingController(rootView: content())
+        let frame = CGRect.init(origin: .zero, size: CGSize.init(width: UIScreen.main.bounds.size.width, height: height))
+        uiview.view.frame = frame
+        
+        //MARK: drawing image
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
+        uiview.view.drawHierarchy(in: frame, afterScreenUpdates: true)
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        if let newImage = newImage {
+            writeToAlbum(image: newImage)
+        }
+    }
+    
+    func writeToAlbum(image: UIImage) {
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(save(_: didFinishSavingWithError: contextInfo:)), nil)
+    }
+    @objc
+    func save(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            self.errorMessage = error.localizedDescription
+            self.showError.toggle()
+        }else {
+            self.errorMessage = "Saved Successed"
+            self.showError.toggle()
+        }
+    }
+}
