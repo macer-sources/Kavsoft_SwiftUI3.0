@@ -20,6 +20,9 @@ struct CanvasView: View {
                         item.view
                     } moveFront: {
                         moveViewToFront(stackitem: item)
+                    } onDelete: {
+                        viewModel.currentlyTappedItem = item
+                        viewModel.showDeleteAlert.toggle()
                     }
                 }
             }
@@ -27,6 +30,17 @@ struct CanvasView: View {
         }
         .frame(height: height)
         .clipped()
+        .alert("Are you sure to delete view?", isPresented: $viewModel.showDeleteAlert) {
+            Button(role: .destructive) {
+                if let item = viewModel.currentlyTappedItem {
+                    let index = getIndex(item: item)
+                    viewModel.stacks.remove(at: index)
+                }
+            } label: {
+                Text("Yes")
+            }
+
+        }
     }
     
     
@@ -59,11 +73,13 @@ struct CanvasSubView<Content: View> : View {
     var content: Content
     
     var moveFront: () -> Void
+    var onDelete:() -> Void
     
-    init(stackItem: Binding<StackItem>, @ViewBuilder content:@escaping() -> Content, moveFront: @escaping () -> Void) {
+    init(stackItem: Binding<StackItem>, @ViewBuilder content:@escaping() -> Content, moveFront: @escaping () -> Void, onDelete:@escaping () -> Void) {
         self._stackItem = stackItem
         self.content = content()
         self.moveFront = moveFront
+        self.onDelete = onDelete
     }
     
     
@@ -73,19 +89,29 @@ struct CanvasSubView<Content: View> : View {
     
     var body: some View {
         content
-            // TODO: 长按给一点触觉反馈(缩放动画)
-            .onLongPressGesture(minimumDuration: 0.3,perform: {
-                // 在将视图移动到前方时提供触觉反馈和少量缩放动画
-                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-                withAnimation {
-                    hapticScale = 1.2
-                }
-                withAnimation(.easeInOut.delay(0.1)) {
-                    hapticScale = 1
-                }
-                
-                moveFront()
-            })
+            .gesture(
+                TapGesture(count: 2)
+                    .onEnded({ _ in
+                        print("delete")
+                        onDelete()
+                    })
+                    .simultaneously(with:
+                                        // TODO: 长按给一点触觉反馈(缩放动画)
+                                        LongPressGesture(minimumDuration: 0.3)
+                                        .onEnded({ _ in
+                                            // 在将视图移动到前方时提供触觉反馈和少量缩放动画
+                                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                                            withAnimation {
+                                                hapticScale = 1.2
+                                            }
+                                            withAnimation(.easeInOut.delay(0.1)) {
+                                                hapticScale = 1
+                                            }
+                                            
+                                            moveFront()
+                                        })
+                                   )
+            )
             .scaleEffect(hapticScale)
             // TODO: 位移
             .offset(stackItem.offset)

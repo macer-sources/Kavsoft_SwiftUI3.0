@@ -20,6 +20,12 @@ class CanvasViewModel:NSObject, ObservableObject {
     // MARK: Error Properties
     @Published var showError: Bool = false
     @Published var errorMessage: String = ""
+    
+    
+    // MARK: Delete alert
+    @Published var currentlyTappedItem: StackItem?
+    @Published var showDeleteAlert: Bool = false
+    
 }
 
 extension CanvasViewModel {
