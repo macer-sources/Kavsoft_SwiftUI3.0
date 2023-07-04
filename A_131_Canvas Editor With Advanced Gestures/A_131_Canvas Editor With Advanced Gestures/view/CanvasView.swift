@@ -18,6 +18,8 @@ struct CanvasView: View {
                 ForEach($viewModel.stacks) { $item in
                     CanvasSubView(stackItem: $item) {
                         item.view
+                    } moveFront: {
+                        moveViewToFront(stackitem: item)
                     }
                 }
             }
@@ -25,6 +27,21 @@ struct CanvasView: View {
         }
         .frame(height: height)
         .clipped()
+    }
+    
+    
+    func moveViewToFront(stackitem: StackItem) {
+        // Finding Index And Moving to last
+        // since in zstack last item will show on first
+        let currentIndex = getIndex(item: stackitem)
+        let lastIndex = viewModel.stacks.count - 1
+        
+        viewModel.stacks.insert(viewModel.stacks[currentIndex], at: lastIndex)
+    }
+    func getIndex(item: StackItem) -> Int {
+        return viewModel.stacks.firstIndex { i in
+            return item.id == i.id
+        } ?? 0
     }
 }
 
@@ -41,10 +58,12 @@ struct CanvasSubView<Content: View> : View {
     @Binding var stackItem: StackItem
     var content: Content
     
+    var moveFront: () -> Void
     
-    init(stackItem: Binding<StackItem>, @ViewBuilder content:@escaping() -> Content) {
+    init(stackItem: Binding<StackItem>, @ViewBuilder content:@escaping() -> Content, moveFront: @escaping () -> Void) {
         self._stackItem = stackItem
         self.content = content()
+        self.moveFront = moveFront
     }
     
     
@@ -64,6 +83,8 @@ struct CanvasSubView<Content: View> : View {
                 withAnimation(.easeInOut.delay(0.1)) {
                     hapticScale = 1
                 }
+                
+                moveFront()
             })
             .scaleEffect(hapticScale)
             // TODO: 位移
