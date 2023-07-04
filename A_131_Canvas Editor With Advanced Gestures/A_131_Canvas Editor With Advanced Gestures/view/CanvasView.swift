@@ -47,8 +47,25 @@ struct CanvasSubView<Content: View> : View {
         self.content = content()
     }
     
+    
+    // MARK: Haptic animation
+    @State var hapticScale: CGFloat = 1
+    
+    
     var body: some View {
         content
+            // TODO: 长按给一点触觉反馈(缩放动画)
+            .onLongPressGesture(minimumDuration: 0.3,perform: {
+                // 在将视图移动到前方时提供触觉反馈和少量缩放动画
+                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                withAnimation {
+                    hapticScale = 1.2
+                }
+                withAnimation(.easeInOut.delay(0.1)) {
+                    hapticScale = 1
+                }
+            })
+            .scaleEffect(hapticScale)
             // TODO: 位移
             .offset(stackItem.offset)
             .gesture(
