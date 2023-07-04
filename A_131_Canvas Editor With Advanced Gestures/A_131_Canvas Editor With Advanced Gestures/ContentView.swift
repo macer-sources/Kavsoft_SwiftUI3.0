@@ -56,9 +56,13 @@ struct ContentView: View {
         .alert(viewModel.errorMessage, isPresented: $viewModel.showError, actions: {
             
         })
-        .sheet(isPresented: $viewModel.showImagePicker) {
+        .sheet(isPresented: $viewModel.showImagePicker, onDismiss: {
+            if let image = UIImage(data: viewModel.imageData) {
+                viewModel.addImageToStack(image: image)
+            }
+        }, content: {
             ImagePicker(showPicker: $viewModel.showImagePicker, imageData: $viewModel.imageData)
-        }
+        })
     }
 }
 

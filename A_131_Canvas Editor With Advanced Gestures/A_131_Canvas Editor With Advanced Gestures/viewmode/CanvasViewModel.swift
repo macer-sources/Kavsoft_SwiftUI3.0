@@ -22,3 +22,16 @@ class CanvasViewModel: ObservableObject {
     @Published var errorMessage: String = ""
 }
 
+extension CanvasViewModel {
+    // MARK: Adding Image to stack
+    func addImageToStack(image: UIImage) {
+        // MARK: creating swiftui image view and appending into stack
+        let imageView = Image(uiImage: image)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 150, height: 150)
+        
+        stacks.append(StackItem(view: imageView as! AnyView))
+    }
+}
+
