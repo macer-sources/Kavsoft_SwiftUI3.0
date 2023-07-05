@@ -14,6 +14,7 @@ struct ContentView: View {
     @State var expandedItem: Profile?
     @State var loadExpandedContent: Bool = false
     
+    @State var offset: CGSize = .zero
     
     var body: some View {
         NavigationStack {
@@ -32,6 +33,7 @@ struct ContentView: View {
             Rectangle()
                 .fill(.black)
                 .opacity(loadExpandedContent ? 1 : 0)
+                .opacity(offsetProgress())
                 .ignoresSafeArea()
         }
         .overlay {
@@ -54,6 +56,31 @@ struct ContentView: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(width: size.width, height: size.height)
                     .cornerRadius(loadExpandedContent ? 0 : size.height)
+                    .offset(y: loadExpandedContent ? offset.height : .zero)
+                    .gesture(
+                        DragGesture()
+                            .onChanged({ value in
+                                offset = value.translation
+                            })
+                            .onEnded({ value in
+                                let height = value.translation.height
+                                if height > 0 && height > 100 {
+                                    withAnimation(.easeInOut(duration: 0.4)) {
+                                        loadExpandedContent = false
+                                    }
+                                    withAnimation(.easeInOut(duration: 0.4).delay(0.05)) {
+                                        isExpanded = false
+                                    }
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                        offset = .zero
+                                    }
+                                }else {
+                                    withAnimation(.easeInOut(duration: 0.4)) {
+                                        offset = .zero
+                                    }
+                                }
+                            })
+                    )
             }
             .matchedGeometryEffect(id: item.id, in: animation)
             .frame(height: 300)
@@ -82,6 +109,7 @@ struct ContentView: View {
             }
             .padding()
             .opacity(loadExpandedContent ? 1 : 0)
+            .opacity(offsetProgress())
         })
         .transition(.offset(x: 0, y: 1))
         .onAppear {
@@ -90,6 +118,18 @@ struct ContentView: View {
             }
         }
     }
+    
+    
+    
+    func offsetProgress() -> CGFloat {
+        let progress = offset.height / 100
+        if offset.height < 0 {
+            return 1
+        }else {
+            return 1 - (progress < 1 ? progress : 1)
+        }
+    }
+    
     
 }
 
