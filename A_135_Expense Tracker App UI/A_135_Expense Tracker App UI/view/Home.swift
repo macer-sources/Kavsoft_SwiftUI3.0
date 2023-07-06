@@ -42,6 +42,7 @@ struct Home: View {
                 }
                 
                 ExpenseCardView()
+                TransactionsView()
             }
             .padding()
         }
@@ -49,6 +50,26 @@ struct Home: View {
         .background {
             Color("bg")
                 .ignoresSafeArea()
+        }
+    }
+}
+
+
+// MARK: Transactions View
+extension Home {
+    @ViewBuilder
+    func TransactionsView() -> some View {
+        VStack(spacing: 15) {
+            Text("Transactions")
+                .font(.title2.bold())
+                .opacity(0.7)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.bottom)
+            
+            ForEach(sample_expenses) { expense in
+                // MARK: Transactions Card Item
+                TransactionsCardView(expense: expense).environmentObject(viewModel)
+            }
         }
     }
 }

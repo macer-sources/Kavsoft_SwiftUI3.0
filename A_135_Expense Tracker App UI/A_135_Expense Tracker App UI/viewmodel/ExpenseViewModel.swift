@@ -41,6 +41,14 @@ extension ExpenseViewModel {
             return partialResult + (expense.type == .income ? expense.amount : -expense.amount)
         })
         
+       return convertNumberToPrice(value: value)
+    }
+}
+
+
+extension ExpenseViewModel {
+    // MARK: Converting number to price
+    func convertNumberToPrice(value: Double) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         
