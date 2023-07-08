@@ -24,8 +24,9 @@ struct Home: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    Button {
-                        
+                    
+                    NavigationLink {
+                        FilteredDetailView().environmentObject(viewModel)
                     } label: {
                         Image(systemName: "hexagon.fill")
                             .foregroundColor(.gray)
@@ -41,7 +42,7 @@ struct Home: View {
 
                 }
                 
-                ExpenseCardView()
+                ExpenseCardView().environmentObject(viewModel)
                 TransactionsView()
             }
             .padding()
@@ -74,100 +75,6 @@ extension Home {
     }
 }
 
-// MARK: Expense Gradient Cardview
-extension Home {
-    @ViewBuilder
-    func ExpenseCardView() -> some View {
-        GeometryReader { proxy in
-            RoundedRectangle(cornerRadius: 20)
-                .fill(
-                    .linearGradient(colors: [
-                        Color("gradient1"),
-                        Color("gradient2"),
-                        Color("gradient3")
-                    ],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing)
-                )
-            
-            
-            VStack(spacing: 15) {
-                VStack(spacing: 15) {
-                    // MARK: Currently going month date string
-                    Text(viewModel.currentMonthDateString())
-                        .font(.callout)
-                        .fontWeight(.semibold)
-                    
-                    // MARK: Current Month Expenses Price
-                    Text(viewModel.convertExpensesToCurrency(expenses: viewModel.expenses))
-                        .font(.system(size: 35, weight: .bold))
-                        .lineLimit(1)
-                        .padding(.bottom, 5)
-                }
-                .offset(y: -10)
-                
-                HStack(spacing: 15) {
-                    Image(systemName: "arrow.down")
-                        .font(.caption.bold())
-                        .foregroundColor(.green)
-                        .frame(width: 30, height: 30)
-                        .background {
-                            Circle()
-                                .fill(.white.opacity(0.7))
-                        }
-                    
-                    VStack(alignment: .leading,spacing: 4) {
-                        Text("Income")
-                            .font(.caption)
-                            .opacity(0.7)
-                        
-                        Text(viewModel.convertExpensesToCurrency(expenses: viewModel.expenses, type: .income))
-                            .font(.callout)
-                            .fontWeight(.semibold)
-                            .lineLimit(1)
-                            .fixedSize()
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    
-                    Image(systemName: "arrow.up")
-                        .font(.caption.bold())
-                        .foregroundColor(.red)
-                        .frame(width: 30, height: 30)
-                        .background {
-                            Circle()
-                                .fill(.white.opacity(0.7))
-                        }
-                    
-                    VStack(alignment: .leading,spacing: 4) {
-                        Text("Expenses")
-                            .font(.caption)
-                            .opacity(0.7)
-                        
-                        Text(viewModel.convertExpensesToCurrency(expenses: viewModel.expenses, type: .income))
-                            .font(.callout)
-                            .fontWeight(.semibold)
-                            .lineLimit(1)
-                            .fixedSize()
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    
-                }
-                .padding(.horizontal)
-                .padding(.trailing)
-                .offset(y: 15)
-            }
-            .foregroundColor(.white)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-            
-            
-            
-        }
-        .frame(height: 220)
-        .padding(.top)
-    }
-}
 
 
 

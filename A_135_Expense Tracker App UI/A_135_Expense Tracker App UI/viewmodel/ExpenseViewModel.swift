@@ -15,6 +15,10 @@ class ExpenseViewModel: ObservableObject {
     @Published var endDate: Date = .now
     @Published var currentMonthStartDate: Date = .now
     
+    // MARK: DetailsView Properties
+    @Published var tabName: ExpenseType = .expense
+    @Published var showFilterView: Bool = false 
+    
     init() {
         // MARK: Fetching current month starting date
         let calender = Calendar.current
@@ -53,5 +57,13 @@ extension ExpenseViewModel {
         formatter.numberStyle = .currency
         
         return formatter.string(from: .init(value: value)) ?? "$0.00"
+    }
+}
+
+
+// MARK: Converting selected dates to string
+extension ExpenseViewModel {
+    func contvertDateToString() -> String {
+        return startDate.formatted(date: .abbreviated, time: .omitted) + "-" + endDate.formatted(date: .abbreviated, time: .omitted)
     }
 }
