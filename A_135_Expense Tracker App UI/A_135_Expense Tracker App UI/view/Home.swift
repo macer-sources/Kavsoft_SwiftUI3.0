@@ -52,6 +52,16 @@ struct Home: View {
             Color("bg")
                 .ignoresSafeArea()
         }
+        .fullScreenCover(isPresented: $viewModel.addNewExpense) {
+            viewModel.clearData()
+        } content: {
+            NewExpense()
+                .environmentObject(viewModel)
+        }
+        .overlay(alignment: .bottomTrailing) {
+            AddButton()
+        }
+
     }
 }
 
@@ -72,6 +82,34 @@ extension Home {
                 TransactionsCardView(expense: expense).environmentObject(viewModel)
             }
         }
+    }
+}
+
+
+// MARK: Add Expense
+extension Home {
+    @ViewBuilder
+    func AddButton() -> some View {
+        Button {
+            viewModel.addNewExpense.toggle()
+        } label: {
+            Image(systemName: "plus")
+                .font(.system(size: 25))
+                .fontWeight(.medium)
+                .frame(width: 55, height: 55)
+                .background {
+                    Circle()
+                        .fill(.linearGradient(colors: [
+                            Color("gradient1"),
+                            Color("gradient2"),
+                            Color("gradient3")
+                        ], startPoint: .topLeading, endPoint: .bottomTrailing))
+                }
+                .foregroundColor(.white)
+                .shadow(color: .black.opacity(0.1), radius: 5, x: 5, y: 5)
+        }
+        .padding()
+
     }
 }
 

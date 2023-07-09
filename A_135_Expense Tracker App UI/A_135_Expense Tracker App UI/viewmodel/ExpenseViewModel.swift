@@ -19,6 +19,14 @@ class ExpenseViewModel: ObservableObject {
     @Published var tabName: ExpenseType = .expense
     @Published var showFilterView: Bool = false 
     
+    // MARK: New Expense Properties
+    @Published var addNewExpense: Bool = false
+    @Published var amount: String = ""
+    @Published var type: ExpenseType = .all
+    @Published var date: Date = Date()
+    @Published var remark: String = ""
+    
+    
     init() {
         // MARK: Fetching current month starting date
         let calender = Calendar.current
@@ -65,5 +73,20 @@ extension ExpenseViewModel {
 extension ExpenseViewModel {
     func contvertDateToString() -> String {
         return startDate.formatted(date: .abbreviated, time: .omitted) + "-" + endDate.formatted(date: .abbreviated, time: .omitted)
+    }
+}
+
+
+extension ExpenseViewModel {
+    // MARK: Clearing All Data
+    func clearData() {
+        date = Date()
+        type = .all
+        remark = ""
+        amount = ""
+    }
+    
+    func saveData() {
+        debugPrint("Save")
     }
 }

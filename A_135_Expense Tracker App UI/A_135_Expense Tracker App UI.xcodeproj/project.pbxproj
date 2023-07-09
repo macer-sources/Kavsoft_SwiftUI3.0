@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		962380602A599D9500B16C4E /* NewExpense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9623805F2A599D9500B16C4E /* NewExpense.swift */; };
 		9669279E2A56F5B100BF0E47 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9669279D2A56F5B100BF0E47 /* Home.swift */; };
 		966927A02A56F62B00BF0E47 /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9669279F2A56F62B00BF0E47 /* Expense.swift */; };
 		966927A22A56F9D600BF0E47 /* ExpenseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966927A12A56F9D600BF0E47 /* ExpenseViewModel.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9623805F2A599D9500B16C4E /* NewExpense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewExpense.swift; sourceTree = "<group>"; };
 		9669279D2A56F5B100BF0E47 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		9669279F2A56F62B00BF0E47 /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
 		966927A12A56F9D600BF0E47 /* ExpenseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseViewModel.swift; sourceTree = "<group>"; };
@@ -49,6 +51,7 @@
 			children = (
 				9669279D2A56F5B100BF0E47 /* Home.swift */,
 				966927A52A57093100BF0E47 /* FilteredDetailView.swift */,
+				9623805F2A599D9500B16C4E /* NewExpense.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 				966927A02A56F62B00BF0E47 /* Expense.swift in Sources */,
 				966927A62A57093100BF0E47 /* FilteredDetailView.swift in Sources */,
 				9693A7B22A506BB7001DAF0F /* ContentView.swift in Sources */,
+				962380602A599D9500B16C4E /* NewExpense.swift in Sources */,
 				9669279E2A56F5B100BF0E47 /* Home.swift in Sources */,
 				966927A22A56F9D600BF0E47 /* ExpenseViewModel.swift in Sources */,
 				966927A82A5981A700BF0E47 /* ExpenseCardView.swift in Sources */,
